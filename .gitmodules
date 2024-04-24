@@ -1,0 +1,3 @@
+[submodule "climatic-consumer"]
+    path = climatic-consumer
+    url = https://github.com/example/climatic-consumer.git
