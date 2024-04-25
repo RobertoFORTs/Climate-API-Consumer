@@ -1,17 +1,17 @@
 export default class Climate {
-  private _id: string;
+  private id: string;
 
   constructor(id: string) {
-    this._id = id;
+    this.id = id;
   }
 
   // Getter
-  public get id(): string {
-    return this._id;
+  public get getId(): string {
+    return this.id;
   }
 
   // Setter
-  public set id(value: string) {
-    this._id = value;
+  public set setId(value: string) {
+    this.id = value;
   }
 }
