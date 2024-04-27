@@ -6,17 +6,17 @@ export default class Climate {
   private humidity: number;
   private windSpeed: number;
   private climateDescription: string;
-  private coordinates: Address;
+  private location: Address;
   private climate: any; 
   
-  constructor(id: string, dateTime: Date, temperature: number, humidity: number, windSpeed: number, climateDescription: string, coordinates: Address, climate: any) {
+  constructor(id: string, location: Address, dateTime?: Date, temperature?: number, humidity?: number, windSpeed?: number, climateDescription?: string, climate?: any) {
     this.id = id;
     this.dateTime = dateTime;
     this.temperature = temperature;
     this.humidity = humidity;
     this.windSpeed = windSpeed;
     this.climateDescription = climateDescription;
-    this.coordinates = coordinates;
+    this.location = location;
     this.climate = climate;
   }
 
@@ -69,12 +69,12 @@ export default class Climate {
     this.climateDescription = value;
   }
   
-  public get getCoordinates(): Address {
-    return this.coordinates;
+  public get getLocation(): Address {
+    return this.location;
   }
   
-  public set setCoordinates(value: Address) {
-    this.coordinates = value;
+  public set setLocation(value: Address) {
+    this.location = value;
   }
   
   public get getClimate(): any {
