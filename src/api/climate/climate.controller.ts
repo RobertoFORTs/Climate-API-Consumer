@@ -3,6 +3,7 @@ import { ClimateService } from 'src/domain/climate/service/climate.service';
 import Climate from 'src/domain/climate/entity/climate';
 import { ApiTags, ApiCreatedResponse, ApiBadRequestResponse, ApiOperation} from '@nestjs/swagger';
 import { BadRequestResponse } from '../exceptions/bad-request.response';
+import { CreateClimateDto } from './dtos/create-climate.dto';
 
 @Controller('climate')
 @ApiTags('climate')
@@ -15,12 +16,12 @@ export class ClimateController {
     type: [Climate],
   })
   @ApiBadRequestResponse({
-    status: 422,
+    status: 400,
     description: 'Bad Request',
     type: BadRequestResponse,
   })
   @ApiOperation({ summary: 'Creates a new Announcement' })
-  async createClimate(@Body() body: { city: string, stateCode?: string, countryCode?: string, zip?: string }): Promise<Climate> {
+  async createClimate(@Body() body: CreateClimateDto): Promise<Climate> {
     const { city, stateCode, countryCode, zip } = body;
     return this.climateService.createClimate(city, stateCode, countryCode, zip);
   }
