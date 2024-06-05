@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
+@Injectable()
 export class WeatherMapService {
   private readonly BASE_URL: string = 'https://api.openweathermap.org/data/2.5/weather?';
   private readonly apiKey: string = process.env.API_WEATHER_KEY;

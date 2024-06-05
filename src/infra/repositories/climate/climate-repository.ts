@@ -3,6 +3,9 @@ import ClimateRepositoryInterface from "src/domain/climate/repositoryInterface/c
 import ClimateModel from "./climate-model";
 import AddressModel from "./address-model";
 import AddressFactory from "src/domain/climate/factory/address.factory";
+import { Injectable } from "@nestjs/common";
+
+@Injectable()
 export default class ClimateRepository implements ClimateRepositoryInterface{
   async create(entity: Climate): Promise<Climate> {
     try {

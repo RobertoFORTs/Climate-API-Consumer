@@ -16,17 +16,18 @@ export class ClimateService {
   public async createClimate(city: string, stateCode?: string, countryCode?: string, zip?: string): Promise<Climate> {
     const resultGeoLocation = await this.geoLocationService.getCoordinates(city, stateCode, countryCode);
     const geoLocation = {
-      lat: resultGeoLocation[0].lat,
-      lon: resultGeoLocation[0].lon
+      lat: resultGeoLocation.data[0].lat,
+      lon: resultGeoLocation.data[0].lon
     };
     const resultWeather = await this.weatherMapService.getCurrentWeather(geoLocation.lat, geoLocation.lon);
+    console.log(resultWeather);
     const weatherData = {
       dateTime: new Date(resultWeather.dt * 1000),
-      temperature: resultWeather.main.temp,
-      humidity: resultWeather.main.humidity,
-      windSpeed: resultWeather.wind.speed,
-      climateDescription: resultWeather.weather[0].description,
-      climate: resultWeather.weather[0].main
+      temperature: resultWeather.data.main.temp,
+      humidity: resultWeather.data.main.humidity,
+      windSpeed: resultWeather.data.wind.speed,
+      climateDescription: resultWeather.data.weather[0].description,
+      climate: resultWeather.data.weather[0].main
     };
     const newClimate = ClimateFactory.create(city, stateCode, countryCode, zip,
                                               weatherData.dateTime, weatherData.temperature, weatherData.humidity,

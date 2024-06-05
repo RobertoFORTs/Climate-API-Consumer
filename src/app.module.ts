@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { config } from 'dotenv';
+import { ClimateModule } from './domain/climate/climate.module';
 
 config();
 @Module({
@@ -17,8 +18,9 @@ config();
       autoLoadModels: true,
       synchronize: true,
     }),
+    ClimateModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

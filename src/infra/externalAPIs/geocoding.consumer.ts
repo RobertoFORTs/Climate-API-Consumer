@@ -1,5 +1,6 @@
+import { Injectable } from "@nestjs/common";
 import axios from "axios";
-
+@Injectable()
 export default class GeocodingService {
 
   private readonly BASE_URL: string = 'http://api.openweathermap.org/geo/1.0/direct?';
