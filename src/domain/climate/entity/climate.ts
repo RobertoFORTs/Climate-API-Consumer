@@ -1,13 +1,29 @@
+import { ApiProperty } from "@nestjs/swagger";
 import Address from "../valueObject/adress";
 export default class Climate {
+  @ApiProperty()
   private id: string;
+
+  @ApiProperty()
   private dateTime: Date;
+
+  @ApiProperty()
   private temperature: number;
+
+  @ApiProperty()
   private humidity: number;
+
+  @ApiProperty()
   private windSpeed: number;
+
+  @ApiProperty()
   private climateDescription: string;
+
+  @ApiProperty({ type: () => Address })
   private location: Address;
-  private climate: any; 
+
+  @ApiProperty()
+  private climate: string; 
   
   constructor(id: string, location: Address, dateTime?: Date, temperature?: number, humidity?: number, windSpeed?: number, climateDescription?: string, climate?: any) {
     this.id = id;
