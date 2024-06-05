@@ -9,6 +9,9 @@ import { Injectable } from "@nestjs/common";
 export default class ClimateRepository implements ClimateRepositoryInterface{
   async create(entity: Climate): Promise<Climate> {
     try {
+      if (isNaN((new Date(entity.getDateTime)).getTime())) {
+        entity.setDateTime = new Date();
+      }
       const newClimate: ClimateModel = await ClimateModel.create({
         id: entity.getId,
         dateTime: entity.getDateTime,
@@ -17,7 +20,7 @@ export default class ClimateRepository implements ClimateRepositoryInterface{
         windSpeed: entity.getWindSpeed,
         climateDescription: entity.getClimateDescription,
         climate: entity.getClimate,
-        addressDetails: {
+        address: {
           city: entity.getLocation.getCity,
           stateCode: entity.getLocation.getState,
           countryCode: entity.getLocation.getCountry,
@@ -26,7 +29,7 @@ export default class ClimateRepository implements ClimateRepositoryInterface{
       }, {
         include: [AddressModel]
       });
-      const addressReturn = AddressFactory.create(newClimate.addressDetails.city, newClimate.addressDetails.zip, newClimate.addressDetails.stateCode, newClimate.addressDetails.countryCode);
+      const addressReturn = AddressFactory.create(newClimate.address.city, newClimate.address.stateCode, newClimate.address.countryCode, newClimate.address.zip);
       const climateEntityReturn: Climate = new Climate(newClimate.id, addressReturn, newClimate.dateTime, newClimate.temperature, newClimate.humidity, newClimate.windSpeed, newClimate.climateDescription, newClimate.climate);
       return climateEntityReturn;
     } catch (error) {

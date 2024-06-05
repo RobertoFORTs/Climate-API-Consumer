@@ -6,7 +6,6 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  HasOne
 } from "sequelize-typescript";
 import AddressModel from './address-model';
 
@@ -25,9 +24,6 @@ export default class ClimateModel extends Model {
 
   @BelongsTo(() => AddressModel)
   address: AddressModel;
-
-  @HasOne(() => AddressModel)
-  addressDetails: AddressModel;
 
   @Column(DataType.DATE)
   dateTime: Date;

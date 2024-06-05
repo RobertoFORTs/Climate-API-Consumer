@@ -3,6 +3,8 @@ import {
   Model,
   PrimaryKey,
   Column,
+  DataType,
+  Default,
 } from "sequelize-typescript";
 
 @Table({
@@ -11,9 +13,9 @@ import {
 })
 export default class AddressModel extends Model {
   @PrimaryKey
-  @Column
+  @Default(DataType.UUIDV4)
+  @Column(DataType.UUID)
   id: string;
-
   @Column
   city: string;
 
