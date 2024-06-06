@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { ClimateService } from 'src/domain/climate/service/climate.service';
 import Climate from 'src/domain/climate/entity/climate';
 import { ApiTags, ApiCreatedResponse, ApiBadRequestResponse, ApiOperation} from '@nestjs/swagger';
@@ -25,4 +25,11 @@ export class ClimateController {
     const { city, stateCode, countryCode, zip } = body;
     return this.climateService.createClimate(city, stateCode, countryCode, zip);
   }
-}
+
+  @Get()
+  async getAll(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+  ): Promise<PaginatedResponse<Climate>> {
+
+  }

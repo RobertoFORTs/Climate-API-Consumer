@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { config } from 'dotenv';
 import { ClimateModule } from './domain/climate/climate.module';
+import { PaginateModule } from 'nestjs-sequelize-paginate'
 
 config();
 @Module({
@@ -17,6 +18,9 @@ config();
       database: process.env.DB_NAME,
       autoLoadModels: true,
       synchronize: true,
+    }),
+    PaginateModule.forRoot({
+      url: 'http://localhost:3000',
     }),
     ClimateModule,
   ],
