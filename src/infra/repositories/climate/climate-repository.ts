@@ -4,9 +4,14 @@ import ClimateModel from "./climate-model";
 import AddressModel from "./address-model";
 import AddressFactory from "src/domain/climate/factory/address.factory";
 import { Injectable } from "@nestjs/common";
+import { PageOptionsDto } from "src/api/shared/paginate-options.dto";
+import { PaginateService } from 'nestjs-sequelize-paginate';
 
 @Injectable()
 export default class ClimateRepository implements ClimateRepositoryInterface{
+  constructor(
+    private paginationService: PaginateService,
+  ) {}
   async create(entity: Climate): Promise<Climate> {
     try {
       if (isNaN((new Date(entity.getDateTime)).getTime())) {
@@ -38,19 +43,27 @@ export default class ClimateRepository implements ClimateRepositoryInterface{
     }
   }
   
-  update(entity: Climate): Promise<Climate> {
+  async update(entity: Climate): Promise<Climate> {
     console.log(entity);
     throw new Error("Method not implemented.");
   }
-  delete(entity: Climate): Promise<void> {
+  async delete(entity: Climate): Promise<void> {
     console.log(entity);
     throw new Error("Method not implemented.");
   }
-  findById(id: string): Promise<Climate> {
+  async findById(id: string): Promise<Climate> {
     console.log(id);
     throw new Error("Method not implemented.");
   }
-  findAll(): Promise<Climate[]> {
-    throw new Error("Method not implemented.");
+
+  async findAll(paginateOptions: PageOptionsDto) {
+
+    const pageOptions = new PageOptionsDto(paginateOptions);
+    const returnObject = await this.paginationService.findAllPaginate({
+      page: pageOptions.page,
+      offset: pageOptions.take,
+      model: ClimateModel,
+    });
+    return returnObject;
   }
 }

@@ -1,10 +1,10 @@
 export class PaginatedOutputDto<T> {
   data: T[];
   meta: {
-    total: number;
-    lastPage: number;
-    currentPage: number;
-    perPage: number;
+    page: string;
+    totalItems: string;
+    totalPages: string;
+    itemCount: string;
     prev: number | null;
     next: number | null;
   };

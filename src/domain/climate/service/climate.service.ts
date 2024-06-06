@@ -4,6 +4,7 @@ import ClimateFactory from '../factory/climate.factory';
 import GeocodingService from 'src/infra/externalAPIs/geocoding.consumer';
 import { WeatherMapService } from 'src/infra/externalAPIs/weather-map.consumer';
 import Climate from '../entity/climate';
+import { PageOptionsDto } from 'src/api/shared/paginate-options.dto';
 
 @Injectable()
 export class ClimateService {
@@ -33,5 +34,10 @@ export class ClimateService {
                                               weatherData.windSpeed, weatherData.climateDescription, weatherData.climate);
 
     return this.climateRepository.create(newClimate);
+  }
+
+  findAll(paginateOptions: PageOptionsDto) {
+    const result = this.climateRepository.findAll(paginateOptions);
+    return result;
   }
 }

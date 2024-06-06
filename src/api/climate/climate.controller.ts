@@ -1,14 +1,20 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { ClimateService } from 'src/domain/climate/service/climate.service';
 import Climate from 'src/domain/climate/entity/climate';
 import { ApiTags, ApiCreatedResponse, ApiBadRequestResponse, ApiOperation} from '@nestjs/swagger';
 import { BadRequestResponse } from '../exceptions/bad-request.response';
 import { CreateClimateDto } from './dtos/create-climate.dto';
+import { PageOptionsDto } from '../shared/paginate-options.dto';
+import { ApiPaginatedResponse } from 'src/decorators/pagination.decorator';
+import { ClimateResponseDto } from './dtos/response-climate.dto';
+import { PaginatedOutputDto } from '../shared/paginate-response.dto';
+import { mapTo } from '../../utils/map-to';
+
 
 @Controller('climate')
 @ApiTags('climate')
 export class ClimateController {
-  constructor(private readonly climateService: ClimateService) {}
+  constructor(private readonly climateService: ClimateService) { }
 
   @Post()
   @ApiCreatedResponse({
@@ -27,9 +33,22 @@ export class ClimateController {
   }
 
   @Get()
+  @ApiPaginatedResponse(ClimateResponseDto)
   async getAll(
-    @Query('page') page = 1,
-    @Query('limit') limit = 10,
-  ): Promise<PaginatedResponse<Climate>> {
-
+    @Query() paginateOptions: PageOptionsDto,
+  ): Promise<PaginatedOutputDto<ClimateResponseDto>> {
+    const result = await this.climateService.findAll(paginateOptions);
+    const response: PaginatedOutputDto<ClimateResponseDto> = {
+      data: result.items.map((item) => mapTo(item as any, ClimateResponseDto)),
+      meta: {
+        page: result.page,
+        totalItems: result.totalItems,
+        totalPages: result.totalPages,
+        itemCount: result.itemCount,
+        prev: result.prev,
+        next: result.next,
+      },
+    };
+    return response;
   }
+}
