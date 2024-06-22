@@ -26,7 +26,7 @@ export class ClimateController {
     description: 'Bad Request',
     type: BadRequestResponse,
   })
-  @ApiOperation({ summary: 'Creates a new Announcement' })
+  @ApiOperation({ summary: 'Creates a new Climate' })
   async createClimate(@Body() body: CreateClimateDto): Promise<Climate> {
     const { city, stateCode, countryCode, zip } = body;
     return this.climateService.createClimate(city, stateCode, countryCode, zip);
