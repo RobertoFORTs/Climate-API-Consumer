@@ -20,7 +20,7 @@ config();
       synchronize: true,
     }),
     PaginateModule.forRoot({
-      url: 'http://localhost:8080',
+      url: 'http://localhost:3001',
     }),
     ClimateModule,
   ],
