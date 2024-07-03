@@ -19,7 +19,7 @@ export default class ClimateModel extends Model {
   id: string;
 
   @ForeignKey(() => AddressModel)
-  @Column
+  @Column(DataType.UUID)
   addressId: string;
 
   @BelongsTo(() => AddressModel)
